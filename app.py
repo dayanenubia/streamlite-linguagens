@@ -24,15 +24,32 @@ def fetch_data():
 
 dados = fetch_data()
 
-# Configuração da interface Streamlit
-st.title("Análise das Principais Linguagens de Programação")
-st.sidebar.header("Opções")
+# === Barra Lateral ===
+st.sidebar.header('Configurações', divider='orange')
 
-# Opções de exibição
-table_option = st.sidebar.checkbox("Exibir Tabela de Dados")
-graph_line = st.sidebar.checkbox("Gráfico de Linha")
-graph_bar = st.sidebar.checkbox("Gráfico de Barras")
-graph_pie = st.sidebar.checkbox("Top 3 - Gráfico de Pizza")
+data_expander = st.sidebar.expander(label="# **Dados Tabulares**", icon=":material/table:")
+with data_expander:
+    # Formulario dos filtros
+    with st.form("settings_form", clear_on_submit=False):
+        table_option = st.checkbox("Exibir Tabela de Dados")
+
+        # Todo form precisa de um botão de submit, que guarda se ele foi submetido ou não
+        settings_form_submitted = st.form_submit_button("Carregar")
+
+graph_expander = st.sidebar.expander("# **Gráficos**", icon=":material/monitoring:")
+# st.sidebar.subheader('Gráficos')
+with graph_expander:
+    # Formulário dos gráficos
+    with st.form("graphs_form", clear_on_submit=False):
+        graph_line = st.checkbox("Gráfico de Linha")
+        graph_bar = st.checkbox("Gráfico de Barras")
+        graph_pie = st.checkbox("Top 3 - Gráfico de Pizza")
+        
+        graphs_form_submitted = st.form_submit_button("Gerar")
+
+# === Página Principal ===
+st.header('Análise das Principais Linguagens de Programação', divider='orange')
+
 
 if table_option:
     st.subheader("Tabela de Linguagens e Pontos")
